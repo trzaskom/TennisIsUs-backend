@@ -1,0 +1,10 @@
+com\trzaskom\jpa\model\AuditModel.class
+com\trzaskom\jpa\repository\UserRepository.class
+com\trzaskom\jpa\TennisIsUsApplication.class
+com\trzaskom\jpa\model\RatingQuestion.class
+com\trzaskom\jpa\repository\RatingRepository.class
+com\trzaskom\jpa\controller\UserController.class
+com\trzaskom\jpa\exception\ResourceNotFoundException.class
+com\trzaskom\jpa\controller\RatingController.class
+com\trzaskom\jpa\model\Rating.class
+com\trzaskom\jpa\model\User.class
