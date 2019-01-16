@@ -1,5 +1,7 @@
 package com.trzaskom.jpa.model;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,24 +15,34 @@ public class User extends AuditModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    //@NotNull
     @Size(max = 30)
     private String name;
 
-    @NotNull
+    //@NotNull
     @Size(max = 30)
     private String surname;
 
-    @NotNull
+    //@NotNull
     @Size(max = 50)
     @Column(unique = true)
     private String email;
 
     @NotNull
+    @Size(max = 50)
+    @Column(unique = true)
+    private String username;
+
+    @NotNull
+    @Size(max = 200)
+    @Column(unique = true)
+    private String password;
+
+    //@NotNull
     @Size(max = 10)
     private String gender;
 
-    @NotNull
+    //@NotNull
     private Integer age;
 
     public Long getId() {
@@ -65,6 +77,26 @@ public class User extends AuditModel {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
+
     public String getGender() {
         return gender;
     }
@@ -80,5 +112,4 @@ public class User extends AuditModel {
     public void setAge(Integer age) {
         this.age = age;
     }
-
 }
