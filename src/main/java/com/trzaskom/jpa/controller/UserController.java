@@ -17,12 +17,13 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping("/users")
-    @CrossOrigin(origins = {"http://localhost:8080"})
+    @CrossOrigin(origins = {"http://localhost:4200"})
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @PostMapping("/users")
+    @CrossOrigin(origins = {"http://localhost:4200"})
     public User createUser(@Valid @RequestBody User user) {
         return userRepository.save(user);
     }
@@ -32,6 +33,8 @@ public class UserController {
         return userRepository.findById(userId).map(user -> {
             user.setName(userRequest.getName());
             user.setSurname(userRequest.getSurname());
+            user.setUsername(userRequest.getUsername());
+            user.setPassword(userRequest.getPassword());
             user.setEmail(userRequest.getEmail());
             user.setAge(userRequest.getAge());
             user.setGender(userRequest.getGender());
