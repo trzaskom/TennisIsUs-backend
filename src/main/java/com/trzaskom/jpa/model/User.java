@@ -45,6 +45,9 @@ public class User extends AuditModel {
     //@NotNull
     private Integer age;
 
+    //@NotNull
+    private Double rating;
+
     public Long getId() {
         return id;
     }
@@ -111,5 +114,13 @@ public class User extends AuditModel {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 }
