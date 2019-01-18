@@ -5,25 +5,25 @@ import com.trzaskom.jpa.repository.UserRepository;
 import com.trzaskom.jpa.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:4200"})
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
 
     @GetMapping("/users")
-    @CrossOrigin(origins = {"http://localhost:4200"})
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @PostMapping("/users")
-    @CrossOrigin(origins = {"http://localhost:4200"})
     public User createUser(@Valid @RequestBody User user) {
         return userRepository.save(user);
     }
@@ -38,6 +38,17 @@ public class UserController {
             user.setEmail(userRequest.getEmail());
             user.setAge(userRequest.getAge());
             user.setGender(userRequest.getGender());
+            user.setRating(userRequest.getRating());
+            return userRepository.save(user);
+        }).orElseThrow(() -> new ResourceNotFoundException("UserId " + userId + " not found"));
+    }
+
+    @PutMapping("/rating")
+    public User updateRating(@Valid @RequestBody Double rating) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Long userId = userRepository.findByUsername(username).getId();
+        return userRepository.findById(userId).map(user -> {
+                user.setRating(rating);
             return userRepository.save(user);
         }).orElseThrow(() -> new ResourceNotFoundException("UserId " + userId + " not found"));
     }
