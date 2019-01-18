@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ import javax.validation.Valid;
  * Created by miki on 2019-01-04.
  */
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"http://localhost:8080","http://localhost:4200"})
 public class AuthController {
 
     private final UserRepository userRepository;
@@ -38,7 +39,6 @@ public class AuthController {
     }
 
     @GetMapping("/authenticate")
-    @CrossOrigin(origins = {"http://localhost:4200"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void authenticate() {
         // we don't have to do anything here
@@ -49,7 +49,6 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @CrossOrigin(origins = {"http://localhost:4200"})
     public String authorize(@Valid @RequestBody User loginUser,
                             HttpServletResponse response) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -67,7 +66,6 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    @CrossOrigin(origins = {"http://localhost:4200"})
     public String signup(@RequestBody User signupUser) {
         if (this.userRepository.existsByUsername(signupUser.getUsername())) {
             return "EXISTS";
@@ -77,5 +75,12 @@ public class AuthController {
         this.userRepository.save(signupUser);
         return this.tokenProvider.createToken(signupUser.getUsername());
     }
+
+    @GetMapping("/currentUser")
+    public User getAccount(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = this.userRepository.findByUsername(username);
+        return user;
+        }
 
 }
