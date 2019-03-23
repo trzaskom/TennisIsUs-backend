@@ -4,11 +4,11 @@ import com.trzaskom.TennisIsUsApplication;
 import com.trzaskom.jpa.model.User;
 import com.trzaskom.jpa.repository.UserRepository;
 import com.trzaskom.security.jwt.TokenProvider;
+import com.trzaskom.utils.AuthorizationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,9 +77,8 @@ public class AuthController {
     }
 
     @GetMapping("/currentUser")
-    public User getAccount(){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = this.userRepository.findByUsername(username);
+    public User getCurrentUser(){
+        User user = this.userRepository.findByUsername(AuthorizationUtils.getCurrentUsername());
         return user;
         }
 
