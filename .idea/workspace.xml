@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="650b79e4-e2d4-4ff2-a255-f2779d5ee740" name="Default" comment="">
+    <list default="true" id="650b79e4-e2d4-4ff2-a255-f2779d5ee740" name="Default" comment="Update .idea directory">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/trzaskom/dto/UserSearchDTO.java" afterPath="$PROJECT_DIR$/src/main/java/com/trzaskom/dto/UserSearchDTO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/trzaskom/jpa/controller/SearchController.java" afterPath="$PROJECT_DIR$/src/main/java/com/trzaskom/jpa/controller/SearchController.java" />
     </list>
     <ignored path="tennis-is-us.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1002,7 +1000,19 @@
       <option name="project" value="LOCAL" />
       <updated>1553351909361</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Update .idea directory">
+      <created>1553440408341</created>
+      <option name="number" value="00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1553440408341</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Add geolocation fields">
+      <created>1553440526562</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1553440526562</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1046,7 +1056,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
-    <MESSAGE value="Add maven dependencies" />
     <MESSAGE value="Add new query metods" />
     <MESSAGE value="Add logger" />
     <MESSAGE value="Create UserDetailsService" />
@@ -1071,7 +1080,8 @@
     <MESSAGE value="Add DTO class for user and his distance from current user" />
     <MESSAGE value="Add REST method for getting other users searched by current user" />
     <MESSAGE value="Update .idea directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update .idea directory" />
+    <MESSAGE value="Add geolocation fields" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add geolocation fields" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
