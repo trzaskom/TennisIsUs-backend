@@ -14,8 +14,10 @@ public class UserSearchDTO {
     private Integer age;
     private Double rating;
     private double distanceFromCurrentUser;
+    private double searchedLatitude;
+    private double searchedLongitude;
 
-    public UserSearchDTO(User user, double distanceFromCurrentUser){
+    public UserSearchDTO(User user, double distanceFromCurrentUser, double searchedLatitude, double searchedLongitude) {
         this.id = user.getId();
         this.name = user.getName();
         this.surname = user.getSurname();
@@ -24,6 +26,8 @@ public class UserSearchDTO {
         this.age = user.getAge();
         this.rating = user.getRating();
         this.distanceFromCurrentUser = distanceFromCurrentUser;
+        this.searchedLatitude = searchedLatitude;
+        this.searchedLongitude = searchedLongitude;
     }
 
     public Long getId() {
@@ -88,5 +92,21 @@ public class UserSearchDTO {
 
     public void setDistanceFromCurrentUser(double distanceFromCurrentUser) {
         this.distanceFromCurrentUser = distanceFromCurrentUser;
+    }
+
+    public double getSearchedLatitude() {
+        return searchedLatitude;
+    }
+
+    public void setSearchedLatitude(double searchedLatitude) {
+        this.searchedLatitude = searchedLatitude;
+    }
+
+    public double getSearchedLongitude() {
+        return searchedLongitude;
+    }
+
+    public void setSearchedLongitude(double searchedLongitude) {
+        this.searchedLongitude = searchedLongitude;
     }
 }

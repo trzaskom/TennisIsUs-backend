@@ -33,7 +33,7 @@ public class SearchController {
 
     @GetMapping("/search")
     public List<UserSearchDTO> nearbyPlayers(@RequestParam("maxRange") String maxRange,
-                                    @RequestParam("minRating") String minRating, @RequestParam("maxRating") String maxRating) {
+                                             @RequestParam("minRating") String minRating, @RequestParam("maxRating") String maxRating) {
 
         User currentUser = this.userRepository.findByUsername(AuthorizationUtils.getCurrentUsername());
         Optional<Geolocation> usersGeolocation = this.geolocationRepository.findById(currentUser.getId());
@@ -55,7 +55,8 @@ public class SearchController {
                     userInRange = geolocation.getUser();
                     if (Double.parseDouble(minRating) <= userInRange.getRating() &&
                             userInRange.getRating() <= Double.parseDouble(maxRating))
-                        nearbyUsers.add(new UserSearchDTO(userInRange, distance));
+                        nearbyUsers.add(new UserSearchDTO(userInRange, distance,
+                                geolocation.getLatitude(), geolocation.getLongitude()));
                 }
             }
 
