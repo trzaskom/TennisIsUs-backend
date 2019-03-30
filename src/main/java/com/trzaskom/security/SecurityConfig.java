@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by miki on 2019-01-04.
@@ -53,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .antMatchers("/signup").permitAll()
                             .antMatchers("/login").permitAll()
                             .antMatchers("/public").permitAll()
+                            .antMatchers("/socket/**").permitAll()
                             .anyRequest().authenticated()
                             .and()
                         .apply(new JWTConfigurer(this.tokenProvider));
