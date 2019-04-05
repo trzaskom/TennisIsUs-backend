@@ -3,12 +3,11 @@ package com.trzaskom.socket.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Map;
@@ -20,18 +19,6 @@ public class SocketController {
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
-
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> sendMessage(@RequestBody Map<String, String> message) {
-        if (message.containsKey("message")) {
-            if (message.containsKey("toId") && message.get("toId") != null && !message.get("toId").equals("")) {
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.get("toId"), message);
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/" + message.get("fromId"), message);
-            }
-            return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.BAD_REQUEST);
-    }
 
     @MessageMapping("/send/message")
     public Map<String, String> broadcastNotification(String message) {
