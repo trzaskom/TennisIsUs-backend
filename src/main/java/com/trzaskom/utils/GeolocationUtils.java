@@ -20,8 +20,4 @@ public class GeolocationUtils {
         double distance = new BigDecimal(R * c).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
         return distance;
     }
-
-    private static BigDecimal toRadians(BigDecimal angdeg) {
-        return angdeg.divide(new BigDecimal("180"), 7, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(Math.PI));
-    }
 }

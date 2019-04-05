@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Geolocations")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Geolocation extends AuditModel {
 
     @Id
