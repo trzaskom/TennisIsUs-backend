@@ -24,6 +24,11 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @GetMapping("/users/{userId}")
+    public User getUser(@PathVariable Long userId) {
+        return userRepository.findById(userId).get();
+    }
+
     @PostMapping("/users")
     public User createUser(@Valid @RequestBody User user) {
         return userRepository.save(user);
