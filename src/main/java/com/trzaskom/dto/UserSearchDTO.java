@@ -5,7 +5,7 @@ import com.trzaskom.jpa.model.User;
 /**
  * Created by miki on 2019-03-21.
  */
-public class UserSearchDTO {
+public class UserSearchDTO implements Comparable<UserSearchDTO>{
     private Long id;
     private String name;
     private String surname;
@@ -108,5 +108,15 @@ public class UserSearchDTO {
 
     public void setSearchedLongitude(double searchedLongitude) {
         this.searchedLongitude = searchedLongitude;
+    }
+
+    @Override
+    public int compareTo(UserSearchDTO o) {
+        if (this.getDistanceFromCurrentUser() > o.getDistanceFromCurrentUser())
+            return 1;
+        else if (this.getDistanceFromCurrentUser() == o.getDistanceFromCurrentUser())
+            return 0;
+        else
+            return -1;
     }
 }
