@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -47,8 +48,9 @@ public class UserController {
     public User updateRating(@Valid @RequestBody Double rating) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Long userId = userRepository.findByUsername(username).getId();
+        double roundedRating = new BigDecimal(rating).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         return userRepository.findById(userId).map(user -> {
-                user.setRating(rating);
+                user.setRating(roundedRating);
             return userRepository.save(user);
         }).orElseThrow(() -> new ResourceNotFoundException("UserId " + userId + " not found"));
     }
