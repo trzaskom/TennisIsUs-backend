@@ -1,6 +1,7 @@
 package com.trzaskom.dto;
 
 import com.trzaskom.jpa.model.User;
+import com.trzaskom.utils.GenderEnum;
 
 /**
  * Created by miki on 2019-03-21.
@@ -22,7 +23,7 @@ public class UserSearchDTO implements Comparable<UserSearchDTO>{
         this.name = user.getName();
         this.surname = user.getSurname();
         this.username = user.getUsername();
-        this.gender = user.getGender();
+        this.gender = GenderEnum.findGenderByCode(user.getGender());
         this.age = user.getAge();
         this.rating = user.getRating();
         this.distanceFromCurrentUser = distanceFromCurrentUser;
