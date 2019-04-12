@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by miki on 2019-03-19.
@@ -31,33 +33,36 @@ public class SearchController {
 
     @GetMapping("/search")
     public List<UserSearchDTO> nearbyPlayers(@RequestParam("maxRange") String maxRange,
-                                             @RequestParam("minRating") String minRating, @RequestParam("maxRating") String maxRating) {
+                                             @RequestParam("minRating") String minRating,
+                                             @RequestParam("maxRating") String maxRating,
+                                             @RequestParam("minAge") String minAge,
+                                             @RequestParam("maxAge") String maxAge,
+                                             @RequestParam("gender") String gender) {
 
-        User currentUser = this.userRepository.findByUsername(AuthorizationUtils.getCurrentUsername());
-        Optional<Geolocation> usersGeolocation = this.geolocationRepository.findById(currentUser.getId());
         List<UserSearchDTO> nearbyUsers = new ArrayList<>();
+        List<Geolocation> othersGeolocations;
+        double distance;
+        Integer searchRadius = Integer.parseInt(maxRange);
+        Double lowestRating = Double.parseDouble(minRating);
+        Double highestRating = Double.parseDouble(maxRating);
+        Integer youngest = Integer.parseInt(minAge);
+        Integer oldest = Integer.parseInt(maxAge);
+        Integer genderCode = Integer.parseInt(gender);
+        User currentUser = this.userRepository.findByUsername(AuthorizationUtils.getCurrentUsername());
+        Geolocation userGeolocation = this.geolocationRepository.findById(currentUser.getId()).get();
 
-        if (usersGeolocation.isPresent()) {
+        if (genderCode == 3)
+            othersGeolocations = this.geolocationRepository
+                    .findByCryteriaBarringGender(lowestRating, highestRating, youngest, oldest, currentUser.getId());
+        else
+            othersGeolocations = this.geolocationRepository
+                    .findByCryteriaWithGender(lowestRating, highestRating, youngest, oldest, currentUser.getId(), genderCode);
 
-            User userInRange;
-            double distance;
-            List<Geolocation> othersGeolocations = this.geolocationRepository.findAll();
-            othersGeolocations.remove(usersGeolocation.get());
-
-            for (Geolocation geolocation : othersGeolocations) {
-
-                distance = GeolocationUtils.distanceBetweenTwoUsers(usersGeolocation.get().getLatitude(),
-                        usersGeolocation.get().getLongitude(), geolocation.getLatitude(), geolocation.getLongitude());
-
-                if (distance <= Double.parseDouble(maxRange)) {
-                    userInRange = geolocation.getUser();
-                    if (Double.parseDouble(minRating) <= userInRange.getRating() &&
-                            userInRange.getRating() <= Double.parseDouble(maxRating))
-                        nearbyUsers.add(new UserSearchDTO(userInRange, distance,
-                                geolocation.getLatitude(), geolocation.getLongitude()));
-                }
-            }
-
+        for (Geolocation geolocation : othersGeolocations) {
+            distance = GeolocationUtils.distanceBetweenTwoUsers(userGeolocation.getLatitude(),
+                    userGeolocation.getLongitude(), geolocation.getLatitude(), geolocation.getLongitude());
+            if (distance <= searchRadius)
+                nearbyUsers.add(new UserSearchDTO(geolocation.getUser(), distance, geolocation.getLatitude(), geolocation.getLongitude()));
         }
         Collections.sort(nearbyUsers);
         return nearbyUsers;
