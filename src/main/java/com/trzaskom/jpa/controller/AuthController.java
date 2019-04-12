@@ -1,6 +1,7 @@
 package com.trzaskom.jpa.controller;
 
 import com.trzaskom.TennisIsUsApplication;
+import com.trzaskom.dto.UserDTO;
 import com.trzaskom.jpa.model.User;
 import com.trzaskom.jpa.repository.UserRepository;
 import com.trzaskom.security.jwt.TokenProvider;
@@ -77,9 +78,9 @@ public class AuthController {
     }
 
     @GetMapping("/currentUser")
-    public User getCurrentUser(){
+    public UserDTO getCurrentUser(){
         User user = this.userRepository.findByUsername(AuthorizationUtils.getCurrentUsername());
-        return user;
+        return new UserDTO(user);
         }
 
 }
