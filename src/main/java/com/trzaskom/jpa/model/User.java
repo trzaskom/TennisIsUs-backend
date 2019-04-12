@@ -39,8 +39,7 @@ public class User extends AuditModel {
     private String password;
 
     //@NotNull
-    @Size(max = 10)
-    private String gender;
+    private Integer gender;
 
     //@NotNull
     private Integer age;
@@ -100,11 +99,11 @@ public class User extends AuditModel {
         this.password = passwordEncoder.encode(this.password);
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
