@@ -1,7 +1,5 @@
 package com.trzaskom.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
